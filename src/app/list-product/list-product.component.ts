@@ -30,16 +30,8 @@ export class ListProductComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
       if (result === true) {
-        const index = this.products.findIndex(p => {
-          return p.name === product.name && p.price === product.price;
-        });
-        if (index !== -1) {
-          if (this.products.length === 1) {
-            this.products = [];
-          } else {
-            this.products.splice(index, 1);
-          }
-        }
+        this.data.removeProduct(product);
+        this.products = this.data.open().products;
       }
     });
   }
