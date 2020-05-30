@@ -1,0 +1,16 @@
+<div class="page">
+  <mat-toolbar color="primary">
+    <mat-toolbar-row *ngIf="registerKey">Iniciar sesión</mat-toolbar-row>
+    <mat-toolbar-row *ngIf="!registerKey">Iniciar sesión</mat-toolbar-row>
+  </mat-toolbar>
+  <form *ngIf="registerKey" [formGroup]="form" (ngSubmit)="setKey()">
+    <h5>Crear clave para de inicio de sesión</h5>
+    <mat-form-field>
+      <mat-label>Ingresa Clave</mat-label>
+      <input type="text" matInput formControlName="key">
+    </mat-form-field>
+
+    <br>
+    <button mat-raised-button>Ingresar</button>
+  </form>
+</div>
