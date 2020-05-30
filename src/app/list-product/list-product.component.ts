@@ -44,6 +44,10 @@ export class ListProductComponent implements OnInit {
     });
   }
 
+  public editProduct(product: ProductType) {
+    this.router.navigate(['add-product'], { state: product });
+  }
+
   togoHome() {
     this.router.navigate(['sell']);
   }

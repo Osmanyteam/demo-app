@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 export interface ProductType {
   name: string;
   price: number;
 }
 
+export type ProductSell = Array<{client: string; dateTime: Date; products: Array<ProductType & { units: number }> }>;
+
 export interface DataType {
   products: ProductType[];
-  productsSell: Array<ProductType & { dateTime: Date; units: number }>;
+  productsSell: ProductSell;
   keySign: string;
   session: boolean;
 }
@@ -16,7 +19,9 @@ export interface DataType {
   providedIn: 'root',
 })
 export class DataService {
-  constructor() {
+  constructor(
+    private router: Router
+  ) {
   }
 
   public open(): DataType {
@@ -67,8 +72,8 @@ export class DataService {
     });
     if (index !== -1) {
       products[index] = {
-        name: product.name,
-        price: product.price
+        name: newProduct.name,
+        price: newProduct.price
       };
       const data = this.open();
       data.products = products;
@@ -93,6 +98,33 @@ export class DataService {
       this.setData(data);
     }
 
+  }
+
+  public addBuy(products: Array<ProductType & { units: number }>, client: string) {
+    const data = this.open();
+    data.productsSell.push({
+      products,
+      client,
+      dateTime: new Date()
+    });
+    this.setData(data);
+  }
+
+  public checkKey(key: string): boolean {
+    const res =  this.open().keySign === key;
+    if (res === true) {
+      const data = this.open();
+      data.session = true;
+      this.setData(data);
+    }
+    return res;
+  }
+
+  public exit() {
+    const data = this.open();
+    data.session = false;
+    this.setData(data);
+    this.router.navigate(['']);
   }
 
 }

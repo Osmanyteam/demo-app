@@ -6,7 +6,7 @@
   <mat-list-item *ngFor="let product of products">
     <div mat-line>{{product.name}}</div>
     <div mat-line>C$ {{product.price}} </div>
-    <button mat-icon-button>
+    <button mat-icon-button (click)="editProduct(product)">
       <mat-icon mat-list-icon>create</mat-icon>
     </button>
     <button mat-icon-button (click)="openDialogDelete(product)">

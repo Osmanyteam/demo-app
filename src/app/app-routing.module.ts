@@ -5,6 +5,7 @@ import { ListProductComponent } from './list-product/list-product.component';
 import { Sign } from './sign';
 import { SellComponent } from './sell/sell.component';
 import { AddProductComponent } from './add-product/add-product.component';
+import { ReportSellsComponent } from './report-sells/report-sells.component';
 
 
 const routes: Routes = [
@@ -27,6 +28,11 @@ const routes: Routes = [
     component: AddProductComponent,
     canActivate: [Sign]
   },
+  {
+    path: 'report-sells',
+    component: ReportSellsComponent,
+    canActivate: [Sign]
+  }
 ];
 
 @NgModule({

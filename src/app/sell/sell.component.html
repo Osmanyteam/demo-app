@@ -1,25 +1,43 @@
 <div class="page">
   <mat-toolbar color="primary">
     <mat-toolbar-row>
-      <button mat-button [matMenuTriggerFor]="aboveMenu">Productos</button>
-      <mat-menu #aboveMenu="matMenu" yPosition="above">
-        <button mat-menu-item (click)="addProduct()">Agregar</button>
-        <button mat-menu-item (click)="listProducts()">Lista</button>
-      </mat-menu>
+      <span>
+        <button mat-button [matMenuTriggerFor]="aboveMenu">Productos</button>
+        <mat-menu #aboveMenu="matMenu" yPosition="above">
+          <button mat-menu-item (click)="addProduct()">Agregar</button>
+          <button mat-menu-item (click)="listProducts()">Lista</button>
+        </mat-menu>
+        <button mat-button [matMenuTriggerFor]="reportMenu">Reportes</button>
+        <mat-menu #reportMenu="matMenu" yPosition="above">
+          <button mat-menu-item (click)="openReports()">Reporte de Ventas</button>
+        </mat-menu>
+      </span>
+      <span class="icon-exit">
+        <button mat-button (click)="exitApp()">
+          <mat-icon aria-hidden="false" aria-label="Example delete icon">exit_to_app</mat-icon>
+        </button>
+      </span>
     </mat-toolbar-row>
   </mat-toolbar>
   <div class="inner">
     <div class="list-sell">
-
+      <mat-list role="list">
+        <div mat-subheader>Productos a vender</div>
+        <mat-list-item role="listitem" *ngFor="let prod of sellToProducts">
+          <div mat-line>{{prod.name}}/ C$ {{prod.price}}</div>
+          <div mat-line>{{prod.units}}</div>
+          <button mat-icon-button (click)="removeProductSells(prod)">
+            <mat-icon mat-list-icon>delete</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
     </div>
     <div class="products">
       <form>
         <mat-form-field>
-          <input type="text" matInput placeholder="buscar el producto"
-          [matAutocomplete]="auto"
-          [formControl]="buscar" >
+          <input type="text" matInput placeholder="buscar el producto" [matAutocomplete]="auto" [formControl]="buscar">
           <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-            <mat-option *ngFor="let product of filteredOptions | async" [value]="product">
+            <mat-option (click)="openDialog(product)" *ngFor="let product of filteredOptions | async" [value]="product">
               {{product?.name}}
             </mat-option>
           </mat-autocomplete>
@@ -27,12 +45,16 @@
       </form>
 
       <div class="products-list">
-        <button mat-raised-button *ngFor="let prod of products" color="primary">
+        <button mat-raised-button (click)="openDialog(prod)" *ngFor="let prod of products" color="primary">
           {{prod.name.toUpperCase()}}
-          <br>
+          <!-- <br> -->
           <small>C$ {{prod.price}}</small>
         </button>
       </div>
     </div>
+
+    <button id="sell" mat-fab (click)="buy()" *ngIf="sellToProducts.length>0">
+      <mat-icon aria-hidden="false">shopping_cart</mat-icon>
+    </button>
   </div>
 </div>

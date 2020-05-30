@@ -1,6 +1,6 @@
 <div class="page">
   <mat-toolbar color="primary">
-    <mat-toolbar-row><button style="margin-right: 25px;" (click)="togoHome()" mat-icon-button><mat-icon aria-hidden="false">storefront</mat-icon></button> Agregar Producto</mat-toolbar-row>
+    <mat-toolbar-row><button style="margin-right: 25px;" (click)="togoHome()" mat-icon-button><mat-icon aria-hidden="false">storefront</mat-icon></button>{{isEdit===true?'Editar Producto':'Agregar Producto'}}</mat-toolbar-row>
   </mat-toolbar>
   <form [formGroup]="addProduct" (ngSubmit)="submit()">
     <mat-form-field>
@@ -15,6 +15,6 @@
     </mat-form-field>
 
     <br>
-    <button mat-raised-button>Agregar</button>
+    <button mat-raised-button>{{isEdit===true?'Editar':'Agregar'}}</button>
   </form>
 </div>

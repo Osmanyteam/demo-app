@@ -42,10 +42,29 @@ div.page{
             white-space: normal;
             font-size: 12px;
             line-height: 14px;
+
+            small{
+              display: block;
+            }
           }
         }
       }
 
     }
   }
+}
+
+
+#sell{
+  position: fixed;
+  top: auto;
+  bottom: 25px;
+  left: 25px;
+  right: auto;
+  z-index: 100;
+}
+
+.icon-exit {
+  flex: 1 1 auto;
+  text-align: right;
 }

@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Se realizara venta de {{data.total}}</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Nombre del cliente</mat-label>
+    <input matInput type="text" [(ngModel)]="client">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button [disabled]="!client||client===''" mat-button [mat-dialog-close]="client" cdkFocusInitial>Ok</button>
+</div>

@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Agregar Unidades de {{data.name}}</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>cuantas unidades?</mat-label>
+    <input matInput type="number" [(ngModel)]="units">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button [disabled]="!units||units===''" mat-button [mat-dialog-close]="units" cdkFocusInitial>Ok</button>
+</div>

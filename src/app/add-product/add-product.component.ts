@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { DataService } from '../data.service';
+import { DataService, ProductType } from '../data.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -15,20 +15,43 @@ export class AddProductComponent implements OnInit {
     price: new FormControl('', [Validators.required])
   });
 
+  private prod: ProductType;
+  public isEdit = false;
+
   constructor(
     private data: DataService,
-    private router: Router
+    private router: Router,
   ) { }
 
   ngOnInit() {
+    if ('price' in history.state) {
+      try {
+        this.prod = history.state;
+        this.addProduct.patchValue({
+          name: this.prod.name,
+          price: this.prod.price
+        });
+        this.isEdit = true;
+      } catch (e)  {
+        console.error(e);
+      }
+    }
   }
 
   public submit() {
-    this.data.addProduct({
-      name: this.addProduct.value.name,
-      price: this.addProduct.value.price
-    });
-    this.router.navigate(['sell']);
+    if (this.isEdit === false) {
+      this.data.addProduct({
+        name: this.addProduct.value.name,
+        price: this.addProduct.value.price
+      });
+      this.router.navigate(['sell']);
+    } else {
+      this.data.updateProduct(this.prod, {
+        name: this.addProduct.value.name,
+        price: this.addProduct.value.price
+      });
+      this.router.navigate(['list-product']);
+    }
   }
 
   togoHome() {
